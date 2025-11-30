@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-md-5">
+        <h3>Add payment card</h3>
+        <form method="post" class="mt-2">
+            <div class="mb-2">
+                <label class="form-label">Brand</label>
+                <input type="text" name="card_brand" class="form-control" required>
+            </div>
+            <div class="mb-2">
+                <label class="form-label">Last 4 digits</label>
+                <input type="text" name="card_last4" maxlength="4" class="form-control" required>
+            </div>
+            <div class="row g-2">
+                <div class="col-md-6">
+                    <label class="form-label">Exp. month</label>
+                    <input type="number" min="1" max="12" name="exp_month" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Exp. year</label>
+                    <input type="number" name="exp_year" class="form-control" required>
+                </div>
+            </div>
+            <div class="mb-2 mt-2">
+                <label class="form-label">Billing address</label>
+                <select class="form-select" name="billing_address_id" required>
+                    <option value="" disabled selected>Select address</option>
+                    {% for a in addresses %}
+                        <option value="{{ a.address_id }}">{{ a.label or a.street }} - {{ a.city }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button class="btn btn-primary mt-2" type="submit">Save</button>
+        </form>
+    </div>
+    <div class="col-md-7">
+        <h3>Your cards</h3>
+        <table class="table table-striped mt-2">
+            <thead>
+            <tr><th>Brand</th><th>Last4</th><th>Expires</th><th></th></tr>
+            </thead>
+            <tbody>
+            {% for c in cards %}
+                <tr>
+                    <td>{{ c.card_brand }}</td>
+                    <td>•••• {{ c.card_last4 }}</td>
+                    <td>{{ c.exp_month }}/{{ c.exp_year }}</td>
+                    <td class="text-end">
+                        <form method="post" action="{{ url_for('delete_card', card_id=c.card_id) }}" onsubmit="return confirm('Delete this card?')">
+                            <button class="btn btn-sm btn-outline-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% else %}
+                <tr><td colspan="4" class="text-muted">No cards yet. Add one to book a property.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

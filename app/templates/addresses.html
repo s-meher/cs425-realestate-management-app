@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-md-5">
+        <h3>Add address</h3>
+        <form method="post" class="mt-2">
+            <div class="mb-2">
+                <label class="form-label">Label</label>
+                <input type="text" name="label" class="form-control">
+            </div>
+            <div class="mb-2">
+                <label class="form-label">Street</label>
+                <input type="text" name="street" class="form-control" required>
+            </div>
+            <div class="row g-2">
+                <div class="col-md-6">
+                    <label class="form-label">City</label>
+                    <input type="text" name="city" class="form-control" required>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">State</label>
+                    <input type="text" name="state" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Zip</label>
+                    <input type="text" name="zip" class="form-control">
+                </div>
+            </div>
+            <button class="btn btn-primary mt-3" type="submit">Save</button>
+        </form>
+    </div>
+    <div class="col-md-7">
+        <h3>Your addresses</h3>
+        <table class="table table-striped mt-2">
+            <thead>
+            <tr>
+                <th>Label</th><th>Street</th><th>City</th><th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for a in addresses %}
+                <tr>
+                    <td>{{ a.label or "—" }}</td>
+                    <td>{{ a.street }}</td>
+                    <td>{{ a.city }}</td>
+                    <td class="text-end">
+                        <form method="post" action="{{ url_for('delete_address', address_id=a.address_id) }}" onsubmit="return confirm('Delete this address?')">
+                            <button class="btn btn-sm btn-outline-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% else %}
+                <tr><td colspan="4" class="text-muted">No addresses yet.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

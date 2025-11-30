@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>My bookings</h2>
+<table class="table table-striped align-middle mt-3">
+    <thead>
+    <tr><th>ID</th><th>Property</th><th>Dates</th><th>Total</th><th>Type</th></tr>
+    </thead>
+    <tbody>
+    {% for b in bookings %}
+        <tr>
+            <td>{{ b.booking_id }}</td>
+            <td>{{ b.street }}, {{ b.city }}, {{ b.state }}</td>
+            <td>{{ b.start_date }} → {{ b.end_date }}</td>
+            <td>${{ b.total_cost }}</td>
+            <td class="text-capitalize">{{ b["Property_Type"] }}</td>
+        </tr>
+    {% else %}
+        <tr><td colspan="5" class="text-muted">No bookings yet.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

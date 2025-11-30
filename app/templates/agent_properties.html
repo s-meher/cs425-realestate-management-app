@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>All properties</h2>
+    <a class="btn btn-primary" href="{{ url_for('agent_property_form') }}">Add property</a>
+    </div>
+<table class="table table-hover align-middle">
+    <thead>
+    <tr><th>ID</th><th>Type</th><th>Location</th><th>Price</th><th>Availability</th><th></th></tr>
+    </thead>
+    <tbody>
+    {% for p in properties %}
+        <tr>
+            <td>{{ p.property_id }}</td>
+            <td class="text-capitalize">{{ p.type }}</td>
+            <td>{{ p.street }}, {{ p.city }}, {{ p.state }}</td>
+            <td>${{ p.price }}</td>
+            <td>
+                {% if p.availability %}
+                    <span class="badge bg-success">Available</span>
+                {% else %}
+                    <span class="badge bg-secondary">Unavailable</span>
+                {% endif %}
+            </td>
+            <td class="text-end">
+                <a class="btn btn-sm btn-outline-primary" href="{{ url_for('agent_property_form', property_id=p.property_id) }}">Edit</a>
+                <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('agent_property_bookings', property_id=p.property_id) }}">Bookings</a>
+            </td>
+        </tr>
+        <tr class="table-light">
+            <td></td>
+            <td colspan="5">
+                <div class="small text-muted">{{ p.description or "No description" }}</div>
+                {% if p.crime_rate is not none %}<div class="small">Crime rate: {{ p.crime_rate }}</div>{% endif %}
+                {% if p.schools %}<div class="small">Schools: {{ p.schools }}</div>{% endif %}
+            </td>
+        </tr>
+    {% else %}
+        <tr><td colspan="6" class="text-muted">No properties found.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

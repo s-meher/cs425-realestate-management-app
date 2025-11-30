@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Bookings for {{ prop.street }}, {{ prop.city }}</h2>
+<table class="table table-striped align-middle mt-3">
+    <thead>
+    <tr><th>ID</th><th>Renter</th><th>Email</th><th>Dates</th><th>Total</th></tr>
+    </thead>
+    <tbody>
+    {% for b in bookings %}
+        <tr>
+            <td>{{ b.booking_id }}</td>
+            <td>{{ b.first_name }} {{ b.last_name }}</td>
+            <td>{{ b.renter_email }}</td>
+            <td>{{ b.start_date }} → {{ b.end_date }}</td>
+            <td>${{ b.total_cost }}</td>
+        </tr>
+    {% else %}
+        <tr><td colspan="5" class="text-muted">No bookings for this property.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+<a class="btn btn-link" href="{{ url_for('agent_properties') }}">Back to properties</a>
+{% endblock %}

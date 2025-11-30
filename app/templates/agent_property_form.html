@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>{{ property and "Edit property" or "Add property" }}</h2>
+<form method="post" class="row g-3">
+    <div class="col-md-3">
+        <label class="form-label">Type</label>
+        <select name="type" class="form-select" required>
+            {% set current_type = property.type if property else "" %}
+            {% for value,label in [
+                ("house","House"),("apartment","Apartment"),("commercial","Commercial"),
+                ("vacation_home","Vacation home"),("land","Land")
+            ] %}
+                <option value="{{ value }}" {% if current_type==value %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Price</label>
+        <input type="number" step="0.01" name="price" class="form-control" value="{{ property.price if property else '' }}" required>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Sq. footage</label>
+        <input type="number" name="sq_ft" class="form-control" value="{{ property['Sq_Footage'] if property else '' }}">
+    </div>
+    <div class="col-md-3 d-flex align-items-center">
+        <div class="form-check mt-4">
+            <input class="form-check-input" type="checkbox" name="availability" id="availCheck" {% if not property or property.availability %}checked{% endif %}>
+            <label class="form-check-label" for="availCheck">Available</label>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Street</label>
+        <input type="text" name="street" class="form-control" value="{{ property.street if property else '' }}" required>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">City</label>
+        <input type="text" name="city" class="form-control" value="{{ property.city if property else '' }}" required>
+    </div>
+    <div class="col-md-2">
+        <label class="form-label">State</label>
+        <input type="text" name="state" class="form-control" value="{{ property.state if property else '' }}">
+    </div>
+    <div class="col-md-1">
+        <label class="form-label">Zip</label>
+        <input type="text" name="zip" class="form-control" value="{{ property.zip if property else '' }}">
+    </div>
+    <div class="col-12">
+        <label class="form-label">Description</label>
+        <textarea class="form-control" name="description" rows="3">{{ property.description if property else '' }}</textarea>
+    </div>
+
+    <div class="col-12">
+        <h5>Type specific</h5>
+        <p class="text-muted small">Rooms required for houses/apartments; business types for commercial.</p>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Rooms</label>
+        <input type="number" name="rooms" class="form-control" value="{{ subtype['No_of_Rooms'] if subtype else '' }}">
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Building type (apartment)</label>
+        <input type="text" name="building_type" class="form-control" value="{{ subtype['Building_Type'] if subtype else '' }}">
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Business types (commercial)</label>
+        <input type="text" name="business_types" class="form-control" value="{{ subtype['Business_Types'] if subtype else '' }}">
+    </div>
+
+    <div class="col-12 mt-3">
+        <h5>Neighborhood (optional)</h5>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Crime rate</label>
+        <input type="number" step="0.01" name="crime_rate" class="form-control" value="{{ neighborhood.crime_rate if neighborhood else '' }}">
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Schools</label>
+        <input type="text" name="schools" class="form-control" value="{{ neighborhood.schools if neighborhood else '' }}">
+    </div>
+    <div class="col-md-3 d-flex align-items-center">
+        <div class="form-check mt-4">
+            <input class="form-check-input" type="checkbox" name="vacation_homes" id="vacCheck" {% if neighborhood and neighborhood.vacation_homes %}checked{% endif %}>
+            <label class="form-check-label" for="vacCheck">Vacation homes</label>
+        </div>
+    </div>
+    <div class="col-md-3 d-flex align-items-center">
+        <div class="form-check mt-4">
+            <input class="form-check-input" type="checkbox" name="land" id="landCheck" {% if neighborhood and neighborhood.land %}checked{% endif %}>
+            <label class="form-check-label" for="landCheck">Land</label>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <button class="btn btn-primary" type="submit">Save</button>
+        <a class="btn btn-link" href="{{ url_for('agent_properties') }}">Back</a>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <h3>Property {{ property.property_id }}</h3>
+        <p class="mb-1 text-capitalize"><strong>Type:</strong> {{ property.type }}</p>
+        <p class="mb-1"><strong>Address:</strong> {{ property.street }}, {{ property.city }}, {{ property.state }} {{ property.zip }}</p>
+        <p class="mb-1"><strong>Price:</strong> ${{ property.price }}</p>
+        <p>{{ property.description or "No description." }}</p>
+    </div>
+    <div class="col-md-6">
+        <h3>Book this property</h3>
+        {% if cards %}
+        <form method="post" class="row g-2">
+            <div class="col-md-6">
+                <label class="form-label">Start date</label>
+                <input type="date" name="start_date" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">End date</label>
+                <input type="date" name="end_date" class="form-control" required>
+            </div>
+            <div class="col-12">
+                <label class="form-label">Payment card</label>
+                <select class="form-select" name="card_id" required>
+                    <option value="" disabled selected>Select card</option>
+                    {% for c in cards %}
+                        <option value="{{ c.card_id }}">{{ c.card_brand }} •••• {{ c.card_last4 }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary" type="submit">Confirm booking</button>
+                <a class="btn btn-link" href="{{ url_for('search_properties') }}">Back to search</a>
+            </div>
+        </form>
+        {% else %}
+            <p>You need a payment card to book.</p>
+            <a class="btn btn-primary" href="{{ url_for('cards') }}">Add card</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

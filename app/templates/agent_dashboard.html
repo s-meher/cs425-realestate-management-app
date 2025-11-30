@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Agent dashboard</h2>
+<div class="row g-3">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Profile</h5>
+                {% if agent %}
+                    <p class="mb-1"><strong>Job title:</strong> {{ agent.job_title }}</p>
+                    <p class="mb-1"><strong>Agency:</strong> {{ agent.agency_name }}</p>
+                    <p class="mb-1"><strong>Contact:</strong> {{ agent.agency_contact_info or "—" }}</p>
+                {% else %}
+                    <p class="text-muted">No agent record found.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm text-center">
+            <div class="card-body">
+                <p class="text-muted mb-1">Total properties</p>
+                <p class="display-5">{{ property_count }}</p>
+                <a class="btn btn-outline-primary btn-sm" href="{{ url_for('agent_properties') }}">Manage</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm text-center">
+            <div class="card-body">
+                <p class="text-muted mb-1">Total bookings</p>
+                <p class="display-5">{{ booking_count }}</p>
+                <a class="btn btn-outline-primary btn-sm" href="{{ url_for('agent_properties') }}">View bookings</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mt-4">
+    <a class="btn btn-primary" href="{{ url_for('agent_property_form') }}">Add property</a>
+    <a class="btn btn-outline-dark" href="{{ url_for('agent_properties') }}">View all properties</a>
+</div>
+{% endblock %}

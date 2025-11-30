@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Renter dashboard</h2>
+<div class="row g-3">
+    <div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title mb-1">Profile</h5>
+                {% if renter %}
+                    <p class="mb-1"><strong>Desired move-in:</strong> {{ renter.desired_move_in_date or "—" }}</p>
+                    <p class="mb-1"><strong>Preferred location:</strong> {{ renter.preferred_location or "—" }}</p>
+                    <p class="mb-1"><strong>Budget:</strong> {{ renter.monthly_budget or "—" }}</p>
+                    <p class="mb-1"><strong>Rewards bookings:</strong> {{ rewards }}</p>
+                {% else %}
+                    <p class="text-muted">No renter record found.</p>
+                {% endif %}
+                <a class="btn btn-outline-primary btn-sm mt-2" href="{{ url_for('search_properties') }}">Search properties</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Addresses</h5>
+                <p class="display-6">{{ addresses|length }}</p>
+                <a class="btn btn-outline-primary btn-sm" href="{{ url_for('addresses') }}">Manage addresses</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Payment cards</h5>
+                <p class="display-6">{{ cards|length }}</p>
+                <a class="btn btn-outline-primary btn-sm" href="{{ url_for('cards') }}">Manage cards</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mt-4">
+    <h5>Quick actions</h5>
+    <a class="btn btn-primary me-2" href="{{ url_for('my_bookings') }}">View my bookings</a>
+    <a class="btn btn-outline-dark" href="{{ url_for('search_properties') }}">Find a property</a>
+</div>
+{% endblock %}

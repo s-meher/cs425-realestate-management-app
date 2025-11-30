@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row align-items-center">
+    <div class="col-md-7">
+        <h1 class="display-5 fw-bold mb-3">Find your next place.</h1>
+        <p class="lead">Browse available properties, book viewings, and manage listings. The database is already modeled; this app keeps it simple.</p>
+        {% if session.get('user_email') %}
+            {% if session.get('user_type') == 'renter' %}
+                <a class="btn btn-primary me-2" href="{{ url_for('renter_dashboard') }}">Renter dashboard</a>
+                <a class="btn btn-outline-light border" href="{{ url_for('search_properties') }}">Search properties</a>
+            {% else %}
+                <a class="btn btn-primary me-2" href="{{ url_for('agent_dashboard') }}">Agent dashboard</a>
+                <a class="btn btn-outline-light border" href="{{ url_for('agent_properties') }}">Manage properties</a>
+            {% endif %}
+        {% else %}
+            <a class="btn btn-primary me-2" href="{{ url_for('login') }}">Login</a>
+            <a class="btn btn-outline-dark" href="{{ url_for('register') }}">Create account</a>
+        {% endif %}
+    </div>
+    <div class="col-md-5">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Available now</h5>
+                <ul class="list-group list-group-flush">
+                    {% for p in properties %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <div class="fw-semibold text-capitalize">{{ p.type }}</div>
+                                <small class="text-muted">{{ p.street }}, {{ p.city }}, {{ p.state }}</small>
+                            </div>
+                            <div class="text-end">
+                                <div class="fw-bold">${{ p.price }}</div>
+                                {% if p.availability %}
+                                    <span class="badge bg-success">Open</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">Unavailable</span>
+                                {% endif %}
+                            </div>
+                        </li>
+                    {% else %}
+                        <li class="list-group-item">No available properties right now.</li>
+                    {% endfor %}
+                </ul>
+                <a class="btn btn-link mt-3 p-0" href="{{ url_for('search_properties') }}">See all properties →</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
