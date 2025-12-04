@@ -9,8 +9,8 @@ def get_connection():
     """
     return psycopg.connect(
         dbname="realestate_db",
-        user="shreemeher",
-        password="",
+        user="postgres",
+        password="1234",
         host="localhost",
         port=5432,
         options="-c search_path=realestate,public",
