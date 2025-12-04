@@ -1,5 +1,5 @@
-import psycopg2
-import psycopg2.extras
+import psycopg
+from psycopg.rows import dict_row
 
 
 def get_connection():
@@ -7,7 +7,7 @@ def get_connection():
     Open a new database connection with the search_path set to the realestate schema.
     Adjust credentials as needed for your local setup.
     """
-    return psycopg2.connect(
+    return psycopg.connect(
         dbname="realestate_db",
         user="shreemeher",
         password="",
@@ -18,5 +18,5 @@ def get_connection():
 
 
 def dict_cursor(conn):
-    """Return a RealDictCursor for the given connection."""
-    return conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    """Return a cursor that returns dictionary-like rows."""
+    return conn.cursor(row_factory=dict_row)
