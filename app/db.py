@@ -18,6 +18,6 @@ def get_connection():
 
 
 def dict_cursor(conn):
-    """Return a cursor that returns dictionary-like rows."""
     conn = get_connection()
-    cursor_factory=psycopg2.extras.RealDictCursor
+    cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    return cur, conn
