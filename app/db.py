@@ -12,7 +12,7 @@ def get_connection():
         user="postgres",
         password="1234",
         host="localhost",
-        port=5432,
+        port=5433,
         options="-c search_path=realestate,public",
     )
 
