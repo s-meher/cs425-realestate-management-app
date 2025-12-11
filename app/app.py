@@ -11,7 +11,7 @@ from flask import (
     session,
     url_for,
 )
-import psycopg
+import psycopg2
 
 from db import get_connection, dict_cursor
 
@@ -142,7 +142,7 @@ def register():
             if user_type == "agent":
                 return redirect(url_for("agent_dashboard"))
             return redirect(url_for("renter_dashboard"))
-        except psycopg.Error as exc:
+        except psycopg2.Error as exc:
             flash(f"Registration failed: {exc.pgerror or exc}", "danger")
     return render_template("register.html")
 
@@ -222,7 +222,7 @@ def addresses():
                             (email, label, street, city, state, zip_code),
                         )
                 flash("Address added.", "success")
-            except psycopg.Error as exc:
+            except psycopg2.Error as exc:
                 flash(f"Could not add address: {exc.pgerror or exc}", "danger")
         return redirect(url_for("addresses"))
 
@@ -248,7 +248,7 @@ def delete_address(address_id):
                     (address_id, email),
                 )
         flash("Address deleted.", "success")
-    except psycopg.Error as exc:
+    except psycopg2.Error as exc:
         flash(
             "Unable to delete address (it may be used as a billing address).",
             "danger",
@@ -292,7 +292,7 @@ def cards():
                             ),
                         )
                 flash("Card added.", "success")
-            except psycopg.Error as exc:
+            except psycopg2.Error as exc:
                 flash(f"Could not add card: {exc.pgerror or exc}", "danger")
         return redirect(url_for("cards"))
 
@@ -318,7 +318,7 @@ def delete_card(card_id):
                     (card_id, email),
                 )
         flash("Card deleted.", "success")
-    except psycopg.Error:
+    except psycopg2.Error:
         flash("Unable to delete card (it may be used in a booking).", "danger")
     return redirect(url_for("cards"))
 
@@ -440,7 +440,7 @@ def book_property(property_id):
                     )
             flash("Booking created.", "success")
             return redirect(url_for("my_bookings"))
-        except psycopg.Error as exc:
+        except psycopg2.Error as exc:
             flash(
                 "Could not create booking (dates may overlap or card/property invalid).",
                 "danger",
@@ -643,7 +643,7 @@ def agent_property_form(property_id=None):
                         )
             flash("Property saved.", "success")
             return redirect(url_for("agent_properties"))
-        except psycopg.Error as exc:
+        except psycopg2.Error as exc:
             flash(f"Could not save property: {exc.pgerror or exc}", "danger")
             return redirect(
                 url_for("agent_property_form", property_id=property_id)
