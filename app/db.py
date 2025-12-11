@@ -1,5 +1,5 @@
-import psycopg
-from psycopg.rows import dict_row
+import psycopg2
+from psycopg2.rows import dict_row
 
 
 def get_connection():
@@ -7,7 +7,7 @@ def get_connection():
     Open a new database connection with the search_path set to the realestate schema.
     Adjust credentials as needed for your local setup.
     """
-    return psycopg.connect(
+    return psycopg2.connect(
         dbname="realestate_db",
         user="postgres",
         password="1234",
