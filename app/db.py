@@ -1,5 +1,5 @@
 import psycopg2
-from psycopg2.rows import dict_row
+import psycopg2.extras
 
 
 def get_connection():
@@ -19,4 +19,4 @@ def get_connection():
 
 def dict_cursor(conn):
     """Return a cursor that returns dictionary-like rows."""
-    return conn.cursor(row_factory=dict_row)
+    cursor_factory=psycopg2.extras.RealDictCursor
