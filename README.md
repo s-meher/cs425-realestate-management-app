@@ -126,34 +126,8 @@ These are all exercised automatically through the sample data and app behavior.
 
 ---
 
-## 5. Editing and Improving the UI
 
-The current UI uses basic Bootstrap and Jinja templates. Teammates working on UIUX can freely:
-
-* Edit files in `app/templates/`
-* Add CSS to `app/static/`
-* Improve layout in `base.html`
-* Add better navigation
-* Redesign pages without touching backend logic
-
-None of these changes affect the database layer.
-
----
-
-## 6. Known Good Workflow for Teammates
-
-1. Clone or pull the repo
-2. Set up the PostgreSQL database
-3. Start Flask locally
-4. Test renter and agent flows
-5. Update templates as needed
-6. Commit UI changes only
-
-No team member needs to modify the SQL files unless adding new features.
-
----
-
-## 7. Authors
+## 5. Authors
 
 * Members: Shree, Numa, Sakina
 * Course: CS 425 Database Organization
@@ -162,7 +136,7 @@ No team member needs to modify the SQL files unless adding new features.
 
 ---
 
-## 8. Video Demo (to be added)
+## 6. Video Demo
 
 A short demonstration video will be added before final submission showing:
 
@@ -173,7 +147,7 @@ A short demonstration video will be added before final submission showing:
 
 ---
 
-## 9. Notes
+## 7. Notes
 
 If you get database connection errors, update credentials in:
 
