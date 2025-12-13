@@ -226,12 +226,17 @@ FOR EACH ROW EXECUTE FUNCTION mark_unavailable_after_booking();
 CREATE TABLE "Rewards_program" (
     renter_email VARCHAR(200) PRIMARY KEY REFERENCES "ProspectiveRenter"(email) ON DELETE CASCADE,
     registered_on DATE NOT NULL DEFAULT CURRENT_DATE
+    rewards_earned INTEGER REFERENCES 
 );
 
 -- Derived count of bookings for registered renters
-CREATE VIEW renter_rewards AS
-SELECT rp.renter_email,
-       COUNT(b.booking_id)::INT AS bookings_count
+CREATE OR REPLACE VIEW renter_rewards AS
+SELECT
+    rp.renter_email,
+    COUNT(b.booking_id)::INT AS bookings_count,
+    COALESCE(SUM(b.total_cost), 0)::NUMERIC(12,2) AS total_spent
 FROM "Rewards_program" rp
-LEFT JOIN "Bookings" b ON b.renter_email = rp.renter_email
+LEFT JOIN "Bookings" b
+    ON b.renter_email = rp.renter_email
 GROUP BY rp.renter_email;
+
