@@ -2,70 +2,107 @@
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-md-8">
-        <h2>Create account</h2>
+        <h2 class="mb-4">Create account</h2>
+
         <form method="post" class="row g-3">
             <div class="col-md-6">
                 <label class="form-label">Email</label>
                 <input type="email" name="email" class="form-control" required>
             </div>
+
             <div class="col-md-3">
                 <label class="form-label">First name</label>
                 <input type="text" name="first_name" class="form-control" required>
             </div>
+
             <div class="col-md-3">
                 <label class="form-label">Last name</label>
                 <input type="text" name="last_name" class="form-control" required>
             </div>
+
             <div class="col-md-4">
                 <label class="form-label">Phone</label>
                 <input type="text" name="phone" class="form-control">
             </div>
+
             <div class="col-md-4">
                 <label class="form-label">User type</label>
-                <select class="form-select" name="user_type" required>
+                <select class="form-select" name="user_type" id="userType" required>
                     <option value="" selected disabled>Select...</option>
                     <option value="renter">Prospective renter</option>
                     <option value="agent">Agent</option>
                 </select>
             </div>
 
-            <div class="col-12 mt-3">
-                <h5>Agent details</h5>
-            </div>
-            <div class="col-md-4">
-                <label class="form-label">Job title</label>
-                <input type="text" name="job_title" class="form-control">
-            </div>
-            <div class="col-md-4">
-                <label class="form-label">Agency name</label>
-                <input type="text" name="agency_name" class="form-control">
-            </div>
-            <div class="col-md-4">
-                <label class="form-label">Agency contact info</label>
-                <input type="text" name="agency_contact_info" class="form-control">
+            <!-- Agent section -->
+            <div id="agentSection" class="d-none">
+                <div class="col-12 mt-4">
+                    <h5 class="border-bottom pb-2">Agent details</h5>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Job title</label>
+                    <input type="text" name="job_title" class="form-control">
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Agency name</label>
+                    <input type="text" name="agency_name" class="form-control">
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Agency contact info</label>
+                    <input type="text" name="agency_contact_info" class="form-control">
+                </div>
             </div>
 
-            <div class="col-12 mt-3">
-                <h5>Renter preferences</h5>
-            </div>
-            <div class="col-md-4">
-                <label class="form-label">Desired move-in date</label>
-                <input type="date" name="desired_move_in_date" class="form-control">
-            </div>
-            <div class="col-md-4">
-                <label class="form-label">Preferred location</label>
-                <input type="text" name="preferred_location" class="form-control">
-            </div>
-            <div class="col-md-4">
-                <label class="form-label">Monthly budget</label>
-                <input type="number" step="0.01" name="monthly_budget" class="form-control">
+            <!-- Renter section -->
+            <div id="renterSection" class="d-none">
+                <div class="col-12 mt-4">
+                    <h5 class="border-bottom pb-2">Renter preferences</h5>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Desired move-in date</label>
+                    <input type="date" name="desired_move_in_date" class="form-control">
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Preferred location</label>
+                    <input type="text" name="preferred_location" class="form-control">
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Monthly budget</label>
+                    <input type="number" step="0.01" name="monthly_budget" class="form-control">
+                </div>
             </div>
 
-            <div class="col-12">
-                <button class="btn btn-primary" type="submit">Register</button>
-                <a class="btn btn-link" href="{{ url_for('login') }}">Already registered? Login</a>
+            <div class="col-12 mt-4">
+                <button class="btn btn-primary px-4" type="submit">Register</button>
+                <a class="btn btn-link" href="{{ url_for('login') }}">
+                    Already registered? Login
+                </a>
             </div>
         </form>
     </div>
 </div>
+
+<!-- Simple UX toggle script -->
+<script>
+    const userType = document.getElementById("userType");
+    const agentSection = document.getElementById("agentSection");
+    const renterSection = document.getElementById("renterSection");
+
+    userType.addEventListener("change", function () {
+        agentSection.classList.add("d-none");
+        renterSection.classList.add("d-none");
+
+        if (this.value === "agent") {
+            agentSection.classList.remove("d-none");
+        } else if (this.value === "renter") {
+            renterSection.classList.remove("d-none");
+        }
+    });
+</script>
 {% endblock %}
