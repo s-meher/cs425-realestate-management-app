@@ -35,59 +35,53 @@
             </div>
 
             <!-- Agent section -->
-            <div id="agentSection" class="d-none">
-                <div class="col-12 mt-4">
-                    <h5 class="border-bottom pb-2">Agent details</h5>
-                </div>
+<div id="agentSection" class="d-none">
+    <div class="row g-3 mt-3">
+        <div class="col-12">
+            <h5 class="border-bottom pb-2">Agent details</h5>
+        </div>
 
-                <div class="col-md-4">
-                    <label class="form-label">Job title</label>
-                    <input type="text" name="job_title" class="form-control">
-                </div>
+        <div class="col-md-4">
+            <label class="form-label">Job title</label>
+            <input type="text" name="job_title" class="form-control">
+        </div>
 
-                <div class="col-md-4">
-                    <label class="form-label">Agency name</label>
-                    <input type="text" name="agency_name" class="form-control">
-                </div>
+        <div class="col-md-4">
+            <label class="form-label">Agency name</label>
+            <input type="text" name="agency_name" class="form-control">
+        </div>
 
-                <div class="col-md-4">
-                    <label class="form-label">Agency contact info</label>
-                    <input type="text" name="agency_contact_info" class="form-control">
-                </div>
-            </div>
-
-            <!-- Renter section -->
-            <div id="renterSection" class="d-none">
-                <div class="col-12 mt-4">
-                    <h5 class="border-bottom pb-2">Renter preferences</h5>
-                </div>
-
-                <div class="col-md-4">
-                    <label class="form-label">Desired move-in date</label>
-                    <input type="date" name="desired_move_in_date" class="form-control">
-                </div>
-
-                <div class="col-md-4">
-                    <label class="form-label">Preferred location</label>
-                    <input type="text" name="preferred_location" class="form-control">
-                </div>
-
-                <div class="col-md-4">
-                    <label class="form-label">Monthly budget</label>
-                    <input type="number" step="0.01" name="monthly_budget" class="form-control">
-                </div>
-            </div>
-
-            <div class="col-12 mt-4">
-                <button class="btn btn-primary px-4" type="submit">Register</button>
-                <a class="btn btn-link" href="{{ url_for('login') }}">
-                    Already registered? Login
-                </a>
-            </div>
-        </form>
+        <div class="col-md-4">
+            <label class="form-label">Agency contact info</label>
+            <input type="text" name="agency_contact_info" class="form-control">
+        </div>
     </div>
 </div>
 
+<!-- Renter section -->
+<div id="renterSection" class="d-none">
+    <div class="row g-3 mt-3">
+        <div class="col-12">
+            <h5 class="border-bottom pb-2">Renter preferences</h5>
+        </div>
+
+        <div class="col-md-4">
+            <label class="form-label">Desired move-in date</label>
+            <input type="date" name="desired_move_in_date" class="form-control">
+        </div>
+
+        <div class="col-md-4">
+            <label class="form-label">Preferred location</label>
+            <input type="text" name="preferred_location" class="form-control">
+        </div>
+
+        <div class="col-md-4">
+            <label class="form-label">Monthly budget</label>
+            <input type="number" step="0.01" name="monthly_budget" class="form-control">
+        </div>
+    </div>
+</div>
+            
 <!-- Simple UX toggle script -->
 <script>
     const userType = document.getElementById("userType");
